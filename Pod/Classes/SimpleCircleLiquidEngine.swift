@@ -21,7 +21,7 @@ class SimpleCircleLiquidEngine {
     var color = UIColor.blue
     var angleOpen: CGFloat = 1.0
     
-    let ConnectThresh: CGFloat = 0.3
+    let connectThresh: CGFloat = 0.3
     var angleThresh: CGFloat   = 0.5
     
     init(radiusThresh: CGFloat, angleThresh: CGFloat) {
@@ -69,8 +69,8 @@ class SimpleCircleLiquidEngine {
     
     private func circleConnectedPoint(circle: LiquittableCircle, other: LiquittableCircle) -> (CGPoint, CGPoint) {
         var ratio = circleRatio(circle: circle, other: other)
-        ratio = (ratio + ConnectThresh) / (1.0 + ConnectThresh)
-        let angle = CGFloat(M_PI_2) * angleOpen * ratio
+        ratio = (ratio + connectThresh) / (1.0 + connectThresh)
+        let angle = (CGFloat.pi / 2) * angleOpen * ratio
         return circleConnectedPoint(circle: circle, other: other, angle: angle)
     }
 
@@ -120,7 +120,7 @@ class SimpleCircleLiquidEngine {
         if let crossed = CGPoint.intersection(p1, to: p3, from2: p2, to2: p4) {
             let (d1, _) = self.circleConnectedPoint(circle: circle, other: other, angle: 0)
             let (d2, _) = self.circleConnectedPoint(circle: other, other: circle, angle: 0)
-            let r = (ratio - ConnectThresh) / (angleThresh - ConnectThresh)
+            let r = (ratio - connectThresh) / (angleThresh - connectThresh)
 
             let a1 = d2.split(crossed, ratio: (r * r))
             let part = withBezier { path in
